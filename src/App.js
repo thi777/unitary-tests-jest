@@ -1,26 +1,42 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from 'react';
 
-function App() {
+const App = () => {
+  const [movie, updateMovie] = useState('')
+  const [movies, updateMovies] = useState([])
+  const handleInput = e => updateMovie(e.target.value)
+
+  const handleSubmit = e => {
+    e.preventDefault()
+    updateMovies([...movies, movie])
+    updateMovie('')
+  }
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+     <>
+      <form onSubmit={handleSubmit}>
+        <input 
+          value={movie} 
+          data-testid="form-field"
+          onChange={handleInput}
+          placeholder="add you movie here"
+        />
+        <button data-testid="form-btn">enviar</button>
+      </form>
+      <table>
+          <tr>
+            <th>add your movie</th>
+          </tr>
+          <tbody>
+            {movies.map((t, index)=> (
+                <tr key={index}>
+                  <td>{t}</td>
+                </tr>
+            ))}
+          </tbody>
+      </table>
+     </>
   );
 }
+
 
 export default App;
